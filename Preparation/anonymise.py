@@ -85,14 +85,14 @@ def anonymise_data(df, printing=True) -> pd.DataFrame:
 
     if (printing): print("Merchant ",end="",flush=True)
     clean_df["merchant_id"]=anonymise_to_cats(df["merchant"])
-    clean_df["merchant_category"]=df["category"]
+    clean_df["merchant_category"]=anonymise_to_cats(df["category"])
     if (printing): print("DONE")
 
     return clean_df
 
 print("Data ",end="",flush=True)
-training_data=pd.read_csv("data/synthetic_train.csv",index_col=0)
-test_data=pd.read_csv("data/synthetic_train.csv",index_col=0)
+training_data=pd.read_csv("data/synthetic_train.csv", index_col=0)
+test_data=pd.read_csv("data/synthetic_test.csv", index_col=0)
 full_data=pd.concat([training_data, test_data])
 print("LOADED")
 
