@@ -221,14 +221,17 @@ def extend_meta(clean_df : pd.DataFrame) -> pd.DataFrame:
 
     return meta_data
 
-# Load the data
-print("Data ",end="",flush=True)
-training_data = pd.read_csv("data/synthetic_train.csv", index_col=0)
-test_data = pd.read_csv("data/synthetic_test.csv", index_col=0)
-full_data = pd.concat([training_data, test_data])
-print("LOADED")
+sets = ["train", "test"]
 
-clean_df = anonymise_data(full_data)
-meta_data = extend_meta(clean_df)
+for set in sets:
+    print(f"EXTENDING SET: {set.upper()}")
+    # Load the data
+    print("Data ", end="", flush=True)
+    loaded_data = pd.read_csv(f"data/synthetic_{set}.csv", index_col=0)
+    print("LOADED")
 
-save_data(meta_data, "data/meta_features_data.csv")
+
+    print("DATA SIZE:", len(loaded_data))
+    clean_df = anonymise_data(loaded_data)
+    meta_data = extend_meta(clean_df)
+    save_data(meta_data, f"data/meta_features_{set}.csv")

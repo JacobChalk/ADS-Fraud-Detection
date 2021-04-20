@@ -1,10 +1,7 @@
 import pandas as pd
 import numpy as np
 import faiss
-import time
 
-from sklearn.neighbors import KNeighborsClassifier
-from sklearn.neighbors import NearestNeighbors
 from random import randrange, uniform
 
 class FaissKNeighbors:
@@ -35,7 +32,9 @@ def SMUTE(X_maj, y_maj, n_smute):
     while((len(X_maj) - len(X_maj_prime)) < n_smute):
         x1_id = X_maj_prime.sample().index.item()
         x1 = X_maj_prime.iloc[x1_id]
-        knn.fit(X_maj_prime.to_numpy(), y_maj_prime.to_numpy())
+        X_maj_prime_fit = X_maj_prime.to_numpy().copy(order='C')
+        y_maj_prime_fit = y_maj_prime.to_numpy().copy(order='C')
+        knn.fit(X_maj_prime_fit, y_maj_prime_fit)
         distances, indices = knn.kneighbors(x1.to_numpy().reshape(1, -1))
         indices = indices[0][1:6]
         x2_id = indices[randrange(5)]
@@ -49,10 +48,10 @@ def SMUTE(X_maj, y_maj, n_smute):
         X_maj_prime = X_maj_prime.append(x3, ignore_index=True)
         y_maj_prime = y_maj_prime.append(x3_y, ignore_index=True)
 
-        completion = (len(X_maj) - len(X_maj_prime)) / n_smute
+        completion = 100.0 * (len(X_maj) - len(X_maj_prime)) / n_smute
         if completion > last_print:
-            print(f"     {completion:.3f}%")
-            last_print += 0.001
+            print(f"     {completion:.1f}%")
+            last_print += 0.1
 
     return X_maj_prime, y_maj_prime
 
@@ -85,10 +84,10 @@ def SMOTE(X_min, y_min, n_smote):
         X_min_prime = X_min_prime.append(x3, ignore_index=True)
         y_min_prime = y_min_prime.append(x3_y, ignore_index=True)
 
-        completion = (len(X_min_prime) - len(X_min)) / n_smote
+        completion = 100.0 * (len(X_min_prime) - len(X_min)) / n_smote
         if completion > last_print:
-            print(f"     {completion:.3f}%")
-            last_print += 0.001
+            print(f"     {completion:.1f}%")
+            last_print += 0.1
 
     return X_min_prime, y_min_prime
 
@@ -103,10 +102,10 @@ def CSMOUTE(majority, minority, ratio):
     n_smote = round(n * ratio)
     n_smute = n - n_smote
 
-    print("SMOTE")
-    X_min_prime, y_min_prime = SMOTE(X_min, y_min, n_smote)
     print("SMUTE")
     X_maj_prime, y_maj_prime = SMUTE(X_maj, y_maj, n_smute)
+    print("SMOTE")
+    X_min_prime, y_min_prime = SMOTE(X_min, y_min, n_smote)
 
     return X_maj_prime, y_maj_prime, X_min_prime, y_min_prime
 
