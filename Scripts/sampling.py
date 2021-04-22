@@ -102,15 +102,15 @@ def CSMOUTE(majority, minority, ratio):
     n_smote = round(n * ratio)
     n_smute = n - n_smote
 
-    print("SMUTE")
-    X_maj_prime, y_maj_prime = SMUTE(X_maj, y_maj, n_smute)
     print("SMOTE")
     X_min_prime, y_min_prime = SMOTE(X_min, y_min, n_smote)
+    print("SMUTE")
+    X_maj_prime, y_maj_prime = SMUTE(X_maj, y_maj, n_smute)
 
     return X_maj_prime, y_maj_prime, X_min_prime, y_min_prime
 
 print("LOADING DATA")
-meta_data = pd.read_csv("data/meta_features_data.csv", index_col=0)
+meta_data = pd.read_csv("/mnt/storage/scratch/jc17360/ADS/data/meta_features_train.csv", index_col=0)
 
 non_fraud = meta_data[meta_data['is_fraud'] == 0]
 fraud = meta_data[meta_data['is_fraud'] == 1]
@@ -122,5 +122,5 @@ non_fraud_samples['is_fraud'] = samples[1]
 fraud_samples = samples[2]
 fraud_samples['is_fraud'] = samples[3]
 
-non_fraud_samples.to_csv("data/non_fraud_samples.csv")
-fraud_samples.to_csv("data/fraud_samples.csv")
+non_fraud_samples.to_csv("/mnt/storage/scratch/jc17360/ADS/data/CSMOUTE_non_fraud_samples.csv")
+fraud_samples.to_csv("/mnt/storage/scratch/jc17360/ADS/data/CSMOUTE_fraud_samples.csv")
