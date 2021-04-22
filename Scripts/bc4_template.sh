@@ -8,8 +8,8 @@
 
 # Change these parameters above to suit the script. Typically --time and --mem affect the priority queue the most
 # And BC4 prioritises jobs that request more nodes E.g. BC4 configs (viewed with "scontrol show config") has set "PriorityFavorSmall = No"
-# To specify a specific amount of memory, add "#SBATCH --mem X(MB|GB)". Lower means less queue time. However, leaving this flag blank
-# Means you have access to all the memory on the node. Useful if you don't know how much memory your program will consume and don't
+# To specify a specific amount of memory, add "#SBATCH --mem X(MB|GB)". Use only MB or GB, not (MB|GB). Lower means less queue time. However, leaving this 
+# Flag blank means you have access to all the memory on the node. Useful if you don't know how much memory your program will consume and don't
 # Want it to error 
 
 # Get rid of any modules already loaded
