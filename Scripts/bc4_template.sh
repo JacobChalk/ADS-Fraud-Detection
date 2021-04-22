@@ -28,6 +28,8 @@ module load languages/anaconda3/2020.02-tflow-2.2.0
 #	4. Now you should have anaconda installed on your BC4 home directory. You can install custom libraries with commands like:
 #		. "conda install lib"
 #		. "conda install pip -> pip install lib" (Better to use conda install if you can)
+#	   By default, this will download to your base env. If you want a custom environment, do "conda create --name env_name" and then do "conda activate env_name"
+#	   and then download the libraries. NOTE: If you need any packages requiring the CUDA toolkit, BC4 has cuda version 10.1 e.g. cudatoolkit=10.1
 #	5. Comment the "module load" line above and then uncomment the line below. This points BC4 to you anaconda dir
 # source /mnt/storage/home/<user_name>/miniconda3/bin/activate base
 
