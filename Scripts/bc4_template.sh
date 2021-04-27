@@ -8,9 +8,9 @@
 
 # Change these parameters above to suit the script. Typically --time and --mem affect the priority queue the most
 # And BC4 prioritises jobs that request more nodes E.g. BC4 configs (viewed with "scontrol show config") has set "PriorityFavorSmall = No"
-# To specify a specific amount of memory, add "#SBATCH --mem X(MB|GB)". Use only MB or GB, not (MB|GB). Lower means less queue time. However, leaving this 
+# To specify a specific amount of memory, add "#SBATCH --mem X(MB|GB)". Use only MB or GB, not (MB|GB). Lower means less queue time. However, leaving this
 # Flag blank means you have access to all the memory on the node. Useful if you don't know how much memory your program will consume and don't
-# Want it to error 
+# Want it to error
 
 # Get rid of any modules already loaded
 module purge
@@ -41,4 +41,4 @@ python -u script_name.py
 # To run this script. Use the command "sbatch bc4_template.sh" or whatever you rename it to.
 
 # A file called slurm-<job_id>.out will be put into the directory you ran this script from. To view the output, run "tail -f slurm-<job_id>.out"
-# If you want to view the entire file in real time, then run "tail -f -n +1 slurm-<job_id>.out" instead. 
+# If you want to view the entire file in real time, then run "tail -f -n +1 slurm-<job_id>.out" instead.
